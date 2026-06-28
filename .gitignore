@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+
+# 資料與輸出:可重新產生,不進版控
+data/raw/*
+data/processed/*
+results/*
+
+# 保留空資料夾的佔位檔
+!**/.gitkeep
