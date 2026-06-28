@@ -56,6 +56,7 @@ def main():
     df["ret_1h"] = returns                                   # 上一小時報酬
     df["vol_24h"] = returns.rolling(24).std()                # 近 24h 波動度
     df["absret_24h"] = (df["close"] / df["close"].shift(24) - 1.0).abs()   # 近 24h 漲跌幅(絕對值)
+    df["vol_surge"] = df["volume"] / df["volume"].rolling(24).mean()        # 成交量相對近 24h 均量(暴增 > 1)
 
     # 若有 OI 檔(Coinglass,可能只有近幾個月),併進來並算「近 24h 未平倉量變化」。
     # merge_asof backward:每根 1h 取最近一筆、時間 <= 當下的 OI,不偷看未來。
