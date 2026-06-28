@@ -17,11 +17,13 @@ RESULTS_DIR = PROJECT_ROOT / "results"
 
 RAW_KLINES_PATH = DATA_RAW_DIR / "btcusdt_perp_1h.csv"
 RAW_FUNDING_PATH = DATA_RAW_DIR / "btcusdt_funding.csv"
+RAW_OI_PATH = DATA_RAW_DIR / "btcusdt_oi_1h.csv"
 FEATURE_TABLE_PATH = DATA_PROCESSED_DIR / "feature_table.csv"
 EVENT_STUDY_PATH = RESULTS_DIR / "event_study.csv"
 
 # ---- 資料來源(注意:用的是「期貨/永續」API,不是現貨)----------------
 BINANCE_FUTURES_URL = "https://fapi.binance.com"
+COINGLASS_BASE_URL = "https://open-api-v4.coinglass.com"   # 未平倉量歷史(需訂閱金鑰)
 SYMBOL = "BTCUSDT"
 INTERVAL = "1h"
 HISTORY_START_DATE = "2024-01-01"

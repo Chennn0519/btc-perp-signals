@@ -9,3 +9,7 @@ results/*
 
 # 保留空資料夾的佔位檔
 !**/.gitkeep
+
+# 密鑰:絕不進版控(只保留 .example 範本)
+secrets/*
+!secrets/*.example
