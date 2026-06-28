@@ -57,6 +57,18 @@ def main():
     df["vol_24h"] = returns.rolling(24).std()                # 近 24h 波動度
     df["absret_24h"] = (df["close"] / df["close"].shift(24) - 1.0).abs()   # 近 24h 漲跌幅(絕對值)
 
+    # 若有 OI 檔(Coinglass,可能只有近幾個月),併進來並算「近 24h 未平倉量變化」。
+    # merge_asof backward:每根 1h 取最近一筆、時間 <= 當下的 OI,不偷看未來。
+    if config.RAW_OI_PATH.exists():
+        oi = pd.read_csv(config.RAW_OI_PATH, parse_dates=["oi_time"]).sort_values("oi_time")
+        df = pd.merge_asof(df, oi[["oi_time", "oi_close"]], left_on="open_time",
+                           right_on="oi_time", direction="backward")
+        df["oi_change_24h"] = df["oi_close"] / df["oi_close"].shift(24) - 1.0
+        print(f"已併入 OI:{len(oi)} 筆(自 {oi['oi_time'].iloc[0]:%Y-%m-%d});"
+              f"有 OI 的根數 {df['oi_close'].notna().sum()}")
+    else:
+        print("(沒有 OI 檔,略過 OI 特徵)")
+
     # 事件標籤:未來 48h 內 ±3%
     df["event"] = label_future_move_events(df, config.MOVE_THRESHOLD, config.HORIZON_HOURS)
 

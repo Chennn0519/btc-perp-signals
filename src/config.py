@@ -17,13 +17,16 @@ RESULTS_DIR = PROJECT_ROOT / "results"
 
 RAW_KLINES_PATH = DATA_RAW_DIR / "btcusdt_perp_1h.csv"
 RAW_FUNDING_PATH = DATA_RAW_DIR / "btcusdt_funding.csv"
-RAW_OI_PATH = DATA_RAW_DIR / "btcusdt_oi_1h.csv"
+RAW_OI_PATH = DATA_RAW_DIR / "btcusdt_oi.csv"
 FEATURE_TABLE_PATH = DATA_PROCESSED_DIR / "feature_table.csv"
 EVENT_STUDY_PATH = RESULTS_DIR / "event_study.csv"
 
 # ---- 資料來源(注意:用的是「期貨/永續」API,不是現貨)----------------
 BINANCE_FUTURES_URL = "https://fapi.binance.com"
 COINGLASS_BASE_URL = "https://open-api-v4.coinglass.com"   # 未平倉量歷史(需訂閱金鑰)
+# Coinglass OI 的時間間隔。注意:HOBBYIST 方案不支援 1h,只能 4h/6h;1h 需升級 STANDARD。
+# 對「未來 48h 內 ±3%」這種長窗口研究,4h 的 OI 已足夠。
+OI_INTERVAL = "4h"
 SYMBOL = "BTCUSDT"
 INTERVAL = "1h"
 HISTORY_START_DATE = "2024-01-01"
